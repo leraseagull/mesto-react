@@ -1,0 +1,8 @@
+.card__contain {
+    padding: 0 21px 0 21px;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 79px;
+}

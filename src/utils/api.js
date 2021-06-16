@@ -10,7 +10,7 @@
         : Promise.reject(`Ошибка: ${res.status}`);
     }
     
-    getUserInfo() { //1. Загрузка информации о пользователе с сервера
+    getUserInfo() { 
         return fetch(`${this._address}/users/me`,
           {
             headers: {
@@ -19,23 +19,23 @@
           }).then(this._checkResponse);
       }
 
-    editUserInfo({ name, about }) {
+      setUserInfo({ name, about }) {
         return fetch(`${this._address}/users/me`,
-        {
+          {
             method: 'PATCH',
             headers: {
-                authorization: this._token,
-                'Content-Type': 'application/json'
+              authorization: this._token,
+              'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                name: name,
-                about: about
+              name: name,
+              about: about
             })
-        }
+          }
         ).then(this._checkResponse);
-    }
+      }
     
-    getInitialCards() { //2. Загрузка карточек с сервера
+      getInitialCards() {
         return fetch(`${this._address}/cards`,
           {
             headers: {
@@ -44,23 +44,23 @@
           }).then(this._checkResponse);
       }
 
-    addCard({ name, link }) {
+      addCard({ name, link }) {
         return fetch(`${this._address}/cards`,
-        {
+          {
             method: 'POST',
             headers: {
-                authorization: this._token,
-                'Content-Type': 'application/json'
+              authorization: this._token,
+              'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                name: name,
-                link: link
+              name: name,
+              link: link
             })
-        }).then(this._checkResponse);
-    }
+          }).then(this._checkResponse);
+      }
 
-    deleteCard() {
-        return fetch(`${this._address}/cards/${this.elem._id}`,
+    deleteCard(cardId) {
+        return fetch(`${this._address}/cards/${cardId}`,
         {
             method: 'DELETE',
             headers: {
@@ -73,17 +73,17 @@
         this.elem = elem;
     }
 
-    deleteLike() {
-        return fetch(`${this._address}/cards/likes/${this.elem._id}`,
-        {
+    changeLikeCardStatus(cardId, isLiked) {
+        if (isLiked) {
+            return fetch(`${this._address}/cards/likes/${cardId}`,
+            {
             method: 'Delete',
             headers: {
                 authorization: this._token
             }
         }).then(this._checkResponse);
-    }
-    putLike() {
-        return fetch(`${this._address}/cards/likes/${this.elem._id}`,
+    } else {
+        return fetch(`${this._address}/cards/likes/${cardId}`,
         {
             method: 'PUT',
             headers: {
@@ -91,8 +91,9 @@
             }
         }).then(this._checkResponse);
     }
+}
 
-    editAvatarPhoto({ link }) {
+    setUserAvatar({ avatar }) {
         return fetch(`${this._address}/users/me/avatar`,
         {
             method: "PATCH",
@@ -101,12 +102,13 @@
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                avatar: link
+                avatar: avatar
             })
         }).then(this._checkResponse);
     }
 }
-//eslint-disable-next-line
+
+
 const api = new Api({
     address: 'https://mesto.nomoreparties.co/v1/cohort-23',
     token: '3ba80848-84c8-48bd-a97a-d35ecfe36586'

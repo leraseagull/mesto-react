@@ -1,16 +1,16 @@
-function PopupWithForm({ title, name, isOpen, onClose, buttonText, children }) {
-    return (
-        <article className={`popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`}>
-            <form className="popup__container" name={name} noValidate>
-                <h3 className="popup__title">{title}</h3>
+function PopupWithForm({ title, name, isOpen, onClose, buttonText, children, onSubmit }) {
+  return (
+    <div className={`popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`}>
+      <form className="popup__container" name={name} noValidate onSubmit={onSubmit}>
+        <h2 className="popup__title">{title}</h2>
 
-                {children}
+        {children}
 
-                <button className="popup__save" type="submit">{buttonText}</button>
-                <button className="popup__close" type="button" aria-label="Закрыть форму" onClick={onClose}></button>
-            </form>
-            </article>
-    );
+        <button className="popup__save" type="submit">{buttonText}</button>
+        <button className="popup__close popup__close_profile" type="button" aria-label="Закрыть" onClick={onClose}></button>
+      </form>
+    </div>
+  );
 }
 
 export default PopupWithForm;

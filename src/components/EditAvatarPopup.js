@@ -2,18 +2,16 @@ import React from 'react';
 import PopupWithForm from './PopupWithForm';
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
-  const inputRef = React.useRef('');
+  const inputRef = React.useRef();
 
   function handleSubmit(evt) {
     evt.preventDefault()
     onUpdateAvatar({
-      avatar: inputRef.current
+      avatar: inputRef.current.value
     })
   }
   
-  function hundleChangeAvatar(e) {
-    inputRef.current = e.target.value;
-  }
+  
 
   return (
     <PopupWithForm title="Обновить аватар"
@@ -27,7 +25,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
         minLength="2" required
          placeholder="Ссылка на картинку"
           name="link"
-          onChange={hundleChangeAvatar}/>
+          ref={inputRef} />
         <span className="popup__input-error"></span>
       </label>
     </PopupWithForm>
